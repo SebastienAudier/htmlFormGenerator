@@ -1,0 +1,59 @@
+.form {
+	margin: 5%;
+    background: #ddd;
+    padding: 5%;
+}
+
+.form * {
+	font-family: helvetica;
+}
+
+.buttons {
+	text-align: center;
+}
+
+ button {
+	margin-right: 20px;
+}
+
+.field {
+	float: left;
+	width: 100%;
+	margin-bottom: 20px;
+}
+
+.field > * {
+	float: left;
+}
+
+.label {
+	width: 10%;
+}
+
+.field input,
+.field textarea,
+.field .checkbox-container,
+.field .radio-container {
+	width: 50%;
+}
+
+.field .checkbox-container input,
+.field .radio-container  input {
+	width: 10%;
+}
+
+.error {
+	width: 90%;
+	color: red;
+    margin: 10px;
+    margin-left: 10%;
+    font-size: 14px;
+    font-weight: bold;
+}
+
+.comment {
+	font-style: italic;
+	font-size: 13px;
+	line-height: 2em;
+	color: #3b3b3b;
+}
