@@ -96,8 +96,12 @@ function InputRenderer(aField, aType) {
 			input.setAttribute("type", aType);
 		}
 		input.change(
-			function(e) {
+			function() {
 				aField.form.proxy[aField.attribute] = jQuery(this).val();
+			}
+		);
+		input.keyup(
+			function(e) {
 				if (e.keyCode == 13) {
 					aField.form.save();
 				}
