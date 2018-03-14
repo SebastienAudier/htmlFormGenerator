@@ -1,5 +1,6 @@
 
 
+
 # htmlFormGenerator
 
 Form generator for htmlCanvas library
@@ -30,21 +31,21 @@ Form generator for htmlCanvas library
 ## API
 
 
-#### Form
+### Form
 	
 	
     form = new Form(object);
 	
 	
-#### Fields
+### Fields
 	
 	
 	field = new Input('attribute', 'My label :');
 
 	
-##### Field Types
+#### Field Types
 
-API input fields follow HTML tags.
+API follow HTML tags. [See all fields](https://github.com/SebastienAudier/htmlFormGenerator/blob/master/fields.js)
 
  - Input
  - Textarea
@@ -52,8 +53,26 @@ API input fields follow HTML tags.
  - Select
  - Radio
  - Checkbox
- - specific input types (date, password, color, etc...)  [See all html input types](https://www.w3schools.com/html/html_form_input_types.asp)
+ - Specific input types (date, password, color, etc...)  [See all html input types](https://www.w3schools.com/html/html_form_input_types.asp)
        example:  `new Input('attribute', 'My label :', 'type');`
 
 	   
-#### Conditions
+### Conditions
+
+**Anonymous functions**
+  
+Use the function to check the value during the form validation process. The last arguments are displayed under the field if the evaluation is false.
+	
+    field.addCondition(function(val) {return val != 'hello'}, 'Hello word is reserved');
+
+**Conditions API**
+
+Use the implemented conditions. [See all conditions](https://github.com/SebastienAudier/htmlFormGenerator/blob/master/conditions.js)
+
+##### Example:
+
+	    field.addCondition(new NotEmptyCondition());
+    
+##### You can override error message:
+
+	    field.addCondition(new EmailCondition('This format is not valid !'));
