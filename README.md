@@ -21,3 +21,21 @@ Form generator for htmlCanvas library
    
    
 	<link rel="stylesheet" type="text/css" href='form.css'/>
+	
+	
+## API
+
+
+	### Form
+	
+	```javascript
+		form = new Form(object);
+	```
+	
+	
+	### Fields
+	
+	
+	```javascript
+		field = new Input('attribute', 'My label :');
+	```
