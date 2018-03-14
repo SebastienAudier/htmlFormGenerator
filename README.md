@@ -25,7 +25,7 @@ Form generator for htmlCanvas library
    ### Import css file:
    
    
-	<link rel="stylesheet" type="text/css" href="form.css"/>
+	<link rel="stylesheet" type="text/css" href="htmlFormGenerator.min.css"/>
 	
 	
 ## API

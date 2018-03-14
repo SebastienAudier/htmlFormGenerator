@@ -1,6 +1,5 @@
 .form {
 	margin: 5%;
-    background: #ddd;
     padding: 5%;
 }
 
@@ -38,7 +37,8 @@
 }
 
 .field .checkbox-container input,
-.field .radio-container  input {
+.field .radio-container  input,
+.field input[type=color] {
 	width: 10%;
 }
 
