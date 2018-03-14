@@ -1,6 +1,7 @@
 
 
 
+
 # htmlFormGenerator
 
 Form generator for htmlCanvas library
@@ -76,3 +77,13 @@ Use the implemented conditions. [See all conditions](https://github.com/Sebastie
 ##### You can override error message:
 
 	    field.addCondition(new EmailCondition('This format is not valid !'));
+
+##### Css behavior: 
+
+Try:   
+
+ - `field.required();`
+
+Or:    `
+
+ - `field.required( MySpecificMessage );`

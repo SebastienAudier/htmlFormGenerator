@@ -24,6 +24,7 @@ function PersonRenderer(aPerson) {
 		form = new Form(aPerson);
 		
 		field = new Input('year', 'Year :');
+			field.required();
 			field.addCondition(new NumberCondition());
 			field.addCondition(function(val) {return new Number(val) > 1900}, 'You can not put a value under 1900 !');
 			field.addCondition(function(val) {return new Number(val) < 2018}, 'You can not put a value over 2018 !');

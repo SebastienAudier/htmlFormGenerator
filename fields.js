@@ -1,3 +1,12 @@
+/*
+ * Copyright 2018 Sebastien AUDIER <sebastien.audier@gmail.com>
+ * This file is released under MIT.
+ * See the LICENSE file for more infos.
+ *
+ * A simple Form generator for htmlCanvas library
+ *
+ */
+
 
 Field = function () {
 	this.form;
@@ -5,16 +14,23 @@ Field = function () {
 	this.label = '';
 	this.fieldContainer;
 	this.conditions;
+	this.isRequired;
 	
 	this.init = function(anAtribute, aLabel) {
 		this.conditions = [];
 		this.cssClass = '';
 		this.attribute = anAtribute;
 		this.label = aLabel;
+		this.isRequired = false;
 	}
 	
 	this.label = function(aString) {
 		this.label = aString;
+	}
+	
+	this.required = function(aString) {
+		this.isRequired = true;
+		this.addCondition(new NotEmptyCondition(aString));
 	}
 	
 	this.addCondition = function (aCondition, aMessage) {
@@ -90,7 +106,10 @@ function InputRenderer(aField, aType) {
 	var that = htmlCanvas.widget();
 	
 	that.renderOn = function(html) {
-		html.span(aField.label).addClass('label');
+		label = html.span(aField.label).addClass('label');
+		if(aField.isRequired) {
+			label.addClass('required');
+		}
 		input = html.input();
 		if (typeof(aType) != "undefined") {
 			input.setAttribute("type", aType);
@@ -143,7 +162,10 @@ function TextareaRenderer(aField) {
 	var that = htmlCanvas.widget();
 	
 	that.renderOn = function(html) {
-		html.span(aField.label).addClass('label');
+		label = html.span(aField.label).addClass('label');
+		if(aField.isRequired) {
+			label.addClass('required');
+		}
 		textarea = html.textarea().change(
 			function(e) {
 				aField.form.proxy[aField.attribute] = jQuery(this).val();
@@ -172,7 +194,10 @@ function CheckboxRenderer(aField) {
 	var that = htmlCanvas.widget();
 	
 	that.renderOn = function(html) {
-		html.span(aField.label).addClass('label');
+		label = html.span(aField.label).addClass('label');
+		if(aField.isRequired) {
+			label.addClass('required');
+		}
 		div = html.div().addClass("checkbox-container");
 		for(var i=0; i<aField.options.length; i++) {
 			checkbox = html.input().setAttribute('type', 'checkbox').setAttribute("data-submit", aField.options[i]);
@@ -227,7 +252,10 @@ function RadioRenderer(aField) {
 	var that = htmlCanvas.widget();
 	
 	that.renderOn = function(html) {
-		html.span(aField.label).addClass('label');
+		label = html.span(aField.label).addClass('label');
+		if(aField.isRequired) {
+			label.addClass('required');
+		}
 		div = html.div().addClass("radio-container");
 		for(var i=0; i<aField.options.length; i++) {
 			radio = html.input().setAttribute('type', 'radio').setAttribute("data-submit", aField.options[i]);
@@ -272,7 +300,10 @@ function SelectRenderer(aField) {
 	var that = htmlCanvas.widget();
 	
 	that.renderOn = function(html) {
-		html.span(aField.label).addClass('label');
+		label = html.span(aField.label).addClass('label');
+		if(aField.isRequired) {
+			label.addClass('required');
+		}
 		select = html.select();
 		for(var i=0; i<aField.options.length; i++) {
 			option = html.option(aField.options[i]).setAttribute("value", aField.options[i]);
