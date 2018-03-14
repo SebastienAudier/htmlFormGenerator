@@ -1,3 +1,4 @@
+
 # htmlFormGenerator
 
 Form generator for htmlCanvas library
@@ -14,7 +15,9 @@ Form generator for htmlCanvas library
    ### Load htmlFormGenerator script:
    
    
-   <script type="text/javascript" src="htmlFormGenerator.min.js"></script> 
+
+    <script type="text/javascript" src="htmlFormGenerator.min.js"></script> 
+
    
    
    ### Import css file:
@@ -26,12 +29,13 @@ Form generator for htmlCanvas library
 ## API
 
 
-### Form
-	
-	form = new Form(object);
+#### Form
 	
 	
-### Fields
+    form = new Form(object);
+	
+	
+#### Fields
 	
 	
 	field = new Input('attribute', 'My label :');
