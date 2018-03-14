@@ -63,7 +63,7 @@ API follow HTML tags. [See all fields](https://github.com/SebastienAudier/htmlFo
   
 Use an anonymous function to check the value during the form validation process. The last arguments are displayed under the field if the evaluation is false.
 	
-    field.addCondition(function(val) {return val != 'hello'}, 'Hello word is reserved');
+    field.addCondition( function(val) { return val != 'hello' }, 'Hello word is reserved');
 
 **Conditions API**
 
