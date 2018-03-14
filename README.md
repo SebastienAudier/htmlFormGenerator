@@ -1,4 +1,5 @@
 
+
 # htmlFormGenerator
 
 Form generator for htmlCanvas library
@@ -39,3 +40,20 @@ Form generator for htmlCanvas library
 	
 	
 	field = new Input('attribute', 'My label :');
+
+	
+##### Field Types
+
+API input fields follow HTML tags.
+
+ - Input
+ - Textarea
+ - Password
+ - Select
+ - Radio
+ - Checkbox
+ - specific input types (date, password, color, etc...)  [See all html input types](https://www.w3schools.com/html/html_form_input_types.asp)
+       example:  `new Input('attribute', 'My label :', 'type');`
+
+	   
+#### Conditions
