@@ -15,7 +15,8 @@ Field = function () {
 	this.fieldContainer;
 	this.conditions;
 	this.isRequired;
-	
+	this.cssClass;
+
 	this.init = function(anAtribute, aLabel) {
 		this.conditions = [];
 		this.cssClass = '';
@@ -40,6 +41,10 @@ Field = function () {
 		this.conditions.push(condition);
 	}
 	
+	this.addClass = function(aString) {
+		this.cssClass = aString;
+	}
+
 	this.checkCondition = function (object) {
 		f = object[0];
 		if(f instanceof Condition) {
@@ -94,7 +99,7 @@ Input = function (anAtribute, aLabel, aType) {
 	this.init(anAtribute, aLabel);
 	
 	this.renderOn = function (html) {
-		this.fieldContainer = html.div().addClass('field').asJQuery();
+		this.fieldContainer = html.div().addClass('field ' + this.cssClass).asJQuery();
 		InputRenderer(this, aType).appendTo(this.fieldContainer);
 	}
 }
@@ -137,7 +142,7 @@ Password = function (anAtribute, aLabel) {
 	this.init(anAtribute, aLabel);
 	
 	this.renderOn = function (html) {
-		this.fieldContainer = html.div().addClass('field').asJQuery();
+		this.fieldContainer = html.div().addClass('field ' + this.cssClass).asJQuery();
 		InputRenderer(this, 'password').appendTo(this.fieldContainer);
 	}
 }
@@ -150,7 +155,7 @@ Textarea = function (anAtribute, aLabel) {
 	this.init(anAtribute, aLabel);
 	
 	this.renderOn = function (html) {
-		this.fieldContainer = html.div().addClass('field').asJQuery();
+		this.fieldContainer = html.div().addClass('field ' + this.cssClass).asJQuery();
 		TextareaRenderer(this).appendTo(this.fieldContainer);
 	}
 }
@@ -182,7 +187,7 @@ Checkbox = function (anAtribute, aLabel) {
 	this.init(anAtribute, aLabel);
 	
 	this.renderOn = function (html) {
-		this.fieldContainer = html.div().addClass('field').asJQuery();
+		this.fieldContainer = html.div().addClass('field ' + this.cssClass).asJQuery();
 		CheckboxRenderer(this).appendTo(this.fieldContainer);
 	}
 }
@@ -240,7 +245,7 @@ Radio = function (anAtribute, aLabel) {
 	this.init(anAtribute, aLabel);
 	
 	this.renderOn = function (html) {
-		this.fieldContainer = html.div().addClass('field').asJQuery();
+		this.fieldContainer = html.div().addClass('field ' + this.cssClass).asJQuery();
 		RadioRenderer(this).appendTo(this.fieldContainer);
 	}
 }
@@ -288,7 +293,7 @@ Select = function (anAtribute, aLabel) {
 	this.init(anAtribute, aLabel);
 	
 	this.renderOn = function (html) {
-		this.fieldContainer = html.div().addClass('field').asJQuery();
+		this.fieldContainer = html.div().addClass('field ' + this.cssClass).asJQuery();
 		SelectRenderer(this).appendTo(this.fieldContainer);
 	}
 }

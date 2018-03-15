@@ -31,6 +31,7 @@ function PersonRenderer(aPerson) {
 		form.add(field);
 				
 		field = new Textarea('description', 'Description :');
+			field.addClass('hello world');
 			field.addCondition(new NotEmptyCondition());
 		form.add(field);
 		
