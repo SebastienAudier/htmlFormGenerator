@@ -46,7 +46,7 @@ Form generator for htmlCanvas library
 	
 #### Field Types
 
-API follow HTML tags. [See all fields](https://github.com/SebastienAudier/htmlFormGenerator/blob/master/fields.js)
+API : Follow HTML tags. [See all fields](https://github.com/SebastienAudier/htmlFormGenerator/blob/master/src/js/fields.js)
 
  - Input
  - Textarea
@@ -68,7 +68,7 @@ Use an anonymous function to check the value during the form validation process.
 
 **Conditions API**
 
-Use the implemented conditions. [See all conditions](https://github.com/SebastienAudier/htmlFormGenerator/blob/master/conditions.js)
+Use the implemented conditions. [See all conditions](https://github.com/SebastienAudier/htmlFormGenerator/blob/master/src/js/conditions.js)
 
 ##### Example:
 
