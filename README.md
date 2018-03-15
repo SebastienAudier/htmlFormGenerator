@@ -6,16 +6,16 @@
 
 Form generator for htmlCanvas library
 
-## Load library
+## Libraries
 
 
-   ### External libraries:
+   ### Externals:
 
    [jquery-2.1.4.min.js](http://jquery.com/download/)
    
    [htmlCanvas.js](https://github.com/NicolasPetton/htmlCanvas) 
 	
-   ### Load htmlFormGenerator script:
+   ### Import htmlFormGenerator script:
    
    
 
