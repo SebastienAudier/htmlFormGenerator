@@ -84,6 +84,11 @@ Try:
 
  - `field.required();`
 
-Or:    `
+Or:    
 
- - `field.required( MySpecificMessage );`
+ - `field.required( "MySpecificMessage" );`
+
+More with specific css class:
+
+ - `field.addClass( "MyCssClass" );`
+

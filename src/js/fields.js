@@ -19,7 +19,7 @@ Field = function () {
 
 	this.init = function(anAtribute, aLabel) {
 		this.conditions = [];
-		this.cssClass = '';
+		this.cssClass = 'field';
 		this.attribute = anAtribute;
 		this.label = aLabel;
 		this.isRequired = false;
@@ -42,7 +42,7 @@ Field = function () {
 	}
 	
 	this.addClass = function(aString) {
-		this.cssClass = aString;
+		this.cssClass += ' ' + aString;
 	}
 
 	this.checkCondition = function (object) {
@@ -99,7 +99,7 @@ Input = function (anAtribute, aLabel, aType) {
 	this.init(anAtribute, aLabel);
 	
 	this.renderOn = function (html) {
-		this.fieldContainer = html.div().addClass('field ' + this.cssClass).asJQuery();
+		this.fieldContainer = html.div().addClass(this.cssClass).asJQuery();
 		InputRenderer(this, aType).appendTo(this.fieldContainer);
 	}
 }
@@ -128,6 +128,8 @@ function InputRenderer(aField, aType) {
 			function(e) {
 				if (e.keyCode == 13) {
 					aField.form.save();
+				} else {
+					aField.form.proxy[aField.attribute] = jQuery(this).val();
 				}
 			}
 		);
@@ -142,7 +144,7 @@ Password = function (anAtribute, aLabel) {
 	this.init(anAtribute, aLabel);
 	
 	this.renderOn = function (html) {
-		this.fieldContainer = html.div().addClass('field ' + this.cssClass).asJQuery();
+		this.fieldContainer = html.div().addClass(this.cssClass).asJQuery();
 		InputRenderer(this, 'password').appendTo(this.fieldContainer);
 	}
 }
@@ -155,7 +157,7 @@ Textarea = function (anAtribute, aLabel) {
 	this.init(anAtribute, aLabel);
 	
 	this.renderOn = function (html) {
-		this.fieldContainer = html.div().addClass('field ' + this.cssClass).asJQuery();
+		this.fieldContainer = html.div().addClass(this.cssClass).asJQuery();
 		TextareaRenderer(this).appendTo(this.fieldContainer);
 	}
 }
@@ -187,7 +189,7 @@ Checkbox = function (anAtribute, aLabel) {
 	this.init(anAtribute, aLabel);
 	
 	this.renderOn = function (html) {
-		this.fieldContainer = html.div().addClass('field ' + this.cssClass).asJQuery();
+		this.fieldContainer = html.div().addClass(this.cssClass).asJQuery();
 		CheckboxRenderer(this).appendTo(this.fieldContainer);
 	}
 }
@@ -245,7 +247,7 @@ Radio = function (anAtribute, aLabel) {
 	this.init(anAtribute, aLabel);
 	
 	this.renderOn = function (html) {
-		this.fieldContainer = html.div().addClass('field ' + this.cssClass).asJQuery();
+		this.fieldContainer = html.div().addClass(this.cssClass).asJQuery();
 		RadioRenderer(this).appendTo(this.fieldContainer);
 	}
 }
@@ -293,7 +295,7 @@ Select = function (anAtribute, aLabel) {
 	this.init(anAtribute, aLabel);
 	
 	this.renderOn = function (html) {
-		this.fieldContainer = html.div().addClass('field ' + this.cssClass).asJQuery();
+		this.fieldContainer = html.div().addClass(this.cssClass).asJQuery();
 		SelectRenderer(this).appendTo(this.fieldContainer);
 	}
 }
