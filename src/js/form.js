@@ -9,9 +9,10 @@
 
 Form = function (anObject) {
 	
-	this.fields = [];
 	this.object = anObject;
 	this.proxy = jQuery.extend({}, this.object);
+	this.fields = [];
+	this.conditions = [];
 	this.saveAction;
 
 	this.add = function(anObject) {
@@ -21,12 +22,41 @@ Form = function (anObject) {
 		this.fields.push(anObject);
 	}
 	
-	this.renderOn = function (html) {
-		FormRenderer(this).appendTo(html.div().addClass('form').asJQuery())
+	this.addCondition = function(f, message) {
+		condition = [];
+		condition.push(f);
+		condition.push(message);
+		this.conditions.push(condition);
 	}
 	
-	this.isValidated = function () {
+	this.checkCondition = function(object) {
+		f = object[0].toString();	
+		f = f.slice(f.indexOf("{") + 1, f.lastIndexOf("}"));
+		closure = new Function('val', f);	
+		return closure(eval('this.proxy'));
+	}
+	
+	this.isValidated = function() {
+		for(var i=0; i<this.conditions.length; i++) {
+			condition = this.conditions[i];
+			if(!this.checkCondition(condition)) {
+				Error(condition[1]).appendTo($('.errors'));
+				return false;
+			}
+		}
 		return true;
+	}
+	
+	this.onSave = function (f) {
+		this.saveAction = f;
+	}
+	
+	this.onCancel = function (f) {
+		this.cancelAction = f;
+	}
+	
+	this.renderOn = function(html) {
+		FormRenderer(this).appendTo(html.div().addClass('form').asJQuery())
 	}
 	
 	this.save = function() {
@@ -44,18 +74,8 @@ Form = function (anObject) {
 				f = f[1].split('}')[0];
 				closure = new Function('val', 'return ' + f + ';');
 				return closure(eval(this.proxy));
-			} else {
-				console.log('can not save...');
 			}
 		} 
-	}
-	
-	this.onSave = function (f) {
-		this.saveAction = f;
-	}
-	
-	this.onCancel = function (f) {
-		this.cancelAction = f;
 	}
 }
 
@@ -71,6 +91,7 @@ function FormRenderer(aForm) {
 				aForm.fields[i].renderOn(html);
 			}
 		}
+		errors = html.div().addClass('errors');
 		buttons = html.div().addClass('buttons');
 		html.button('Save').click(function () {save()}).addClass('save').asJQuery().appendTo(buttons.asJQuery());
 	}

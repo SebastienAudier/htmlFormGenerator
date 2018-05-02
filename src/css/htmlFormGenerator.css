@@ -15,6 +15,11 @@
 	font-family: helvetica;
 }
 
+.form .errors {
+	padding-top: 10px;
+	padding-bottom: 10px;
+}
+
 .buttons {
 	text-align: center;
 }
@@ -34,7 +39,7 @@
 }
 
 .field .label {
-	width: 10%;
+	width: 20%;
 }
 
 .required::after{
@@ -56,10 +61,10 @@
 }
 
 .error {
-	width: 90%;
+	width: 80%;
 	color: red;
     margin: 10px;
-    margin-left: 10%;
+    margin-left: 20%;
     font-size: 14px;
     font-weight: bold;
 }

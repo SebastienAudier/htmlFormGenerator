@@ -92,3 +92,20 @@ More with specific css class:
 
  - `field.addClass( "MyCssClass" );`
 
+### Form
+
+##### Conditions:
+
+As field, the form can have conditions. All conditions are checked and shown during the validation process. 
+
+Try:   
+
+ - `form.addCondition(function (val) {return val.email != val.password}, 'Email and password must be differents !');`
+
+##### Utils:
+
+You can add comments in your form. Soon, you will can to build any renderer. 
+
+Try:   
+
+ - `form.add(new Comment("This is a form comment !"));`

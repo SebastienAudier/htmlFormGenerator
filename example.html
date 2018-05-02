@@ -8,8 +8,11 @@
 		<script type='text/javascript' src='./src/js/fields.js'></script> 
 		<script type='text/javascript' src='./src/js/conditions.js'></script> 
 		<script type='text/javascript' src='./src/js/utils.js'></script> 
+		
+	<!-- <script type='text/javascript' src='./htmlFormGenerator.min.js'></script>  -->
 	
-		<link rel="stylesheet" type="text/css" href='./src/css/htmlFormGenerator.css'/>
+<!-- 	<link rel="stylesheet" type="text/css" href='./src/css/htmlFormGenerator.css'/> -->
+		<link rel="stylesheet" type="text/css" href='./htmlFormGenerator.min.css'/>
 	
   	</head> 
 	
@@ -82,6 +85,8 @@
 		
 					form.add(new Comment("This is a form comment !"));
 
+					form.addCondition(function (val) {return val.email != val.description}, 'Email and description must be differents !');
+					
 					form.onSave(function (val) {console.log(val)});
 	
 					form.renderOn(html);			

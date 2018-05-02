@@ -75,6 +75,7 @@ Field = function () {
 FieldList = function () {
 
 	this.conditions = [];
+	this.cssClass = 'field';
 
 	this.setOptions = function (aCollection) {
 		this.options = aCollection;
