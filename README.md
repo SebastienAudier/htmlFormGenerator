@@ -1,7 +1,3 @@
-
-
-
-
 # htmlFormGenerator
 
 Form generator for htmlCanvas library
@@ -109,3 +105,11 @@ You can add comments in your form. Soon, you will can to build any renderer.
 Try:   
 
  - `form.add(new Comment("This is a form comment !"));`
+
+##### Validation:
+
+You have to implement "onSave" method. 
+
+Try:   
+
+ - `form.onSave(function (val) {console.log(val)});`
