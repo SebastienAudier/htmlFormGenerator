@@ -106,11 +106,11 @@ function FormRenderer(aForm) {
 		}
 		errors = html.div().addClass('errors');
 		buttons = html.div().addClass('buttons');
+		html.button(aForm.saveLabel).click(function () {save()}).addClass(aForm.saveCssClass).asJQuery().appendTo(buttons.asJQuery());
 		for(var i=0; i < aForm.buttons.length; i++) {
 			btn = aForm.buttons[i];
 			html.button(btn.label).addClass(btn.cssClass).click(btn.action).asJQuery().appendTo(buttons.asJQuery());
 		} 
-		html.button(aForm.saveLabel).click(function () {save()}).addClass(aForm.saveCssClass).asJQuery().appendTo(buttons.asJQuery());
 	}
 	
 	function isValidated() {
