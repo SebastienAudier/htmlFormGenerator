@@ -14,12 +14,19 @@ Form = function (anObject) {
 	this.fields = [];
 	this.conditions = [];
 	this.saveAction;
-
+	this.saveLabel = 'Save';
+	this.saveCssClass = '';
+	this.buttons = [];
+	
 	this.add = function(anObject) {
-		if(anObject instanceof Field) {
-			anObject.form = this;
+		if(anObject instanceof Button) {
+			this.buttons.push(anObject);
+		} else {
+			if(anObject instanceof Field) {
+				anObject.form = this;
+			}
+			this.fields.push(anObject);
 		}
-		this.fields.push(anObject);
 	}
 	
 	this.addCondition = function(f, message) {
@@ -47,16 +54,22 @@ Form = function (anObject) {
 		return true;
 	}
 	
-	this.onSave = function (f) {
-		this.saveAction = f;
-	}
-	
 	this.onCancel = function (f) {
 		this.cancelAction = f;
 	}
 	
 	this.renderOn = function(html) {
 		FormRenderer(this).appendTo(html.div().addClass('form').asJQuery())
+	}
+	
+	this.saveAction = function(aFunction, aLabel, aCssClass) {
+		this.saveAction = aFunction;
+		if (typeof(aLabel) != "undefined") {
+			this.saveLabel = aLabel;
+		}
+		if (typeof(aCssClass) != "undefined") {
+			this.saveCssClass = aCssClass;
+		}
 	}
 	
 	this.save = function() {
@@ -84,7 +97,7 @@ function FormRenderer(aForm) {
 	var that = htmlCanvas.widget();
 	
 	that.renderOn = function(html) {
-		for(var i=0; i< aForm.fields.length; i++) {
+		for(var i=0; i < aForm.fields.length; i++) {
 			if(aForm.fields[i] instanceof Field) {
 				aForm.fields[i].renderOn(html);
 			} else {
@@ -93,7 +106,11 @@ function FormRenderer(aForm) {
 		}
 		errors = html.div().addClass('errors');
 		buttons = html.div().addClass('buttons');
-		html.button('Save').click(function () {save()}).addClass('save').asJQuery().appendTo(buttons.asJQuery());
+		for(var i=0; i < aForm.buttons.length; i++) {
+			btn = aForm.buttons[i];
+			html.button(btn.label).addClass(btn.cssClass).click(btn.action).asJQuery().appendTo(buttons.asJQuery());
+		} 
+		html.button(aForm.saveLabel).click(function () {save()}).addClass(aForm.saveCssClass).asJQuery().appendTo(buttons.asJQuery());
 	}
 	
 	function isValidated() {

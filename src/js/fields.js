@@ -329,3 +329,17 @@ function SelectRenderer(aField) {
 	
 	return that;
 }
+
+Button = function (aLabel) {
+	this.cssClass = '';
+	this.label = aLabel;
+	this.action;
+
+	this.cssClass = function (val) {
+		this.cssClass = val;
+	}
+	
+	this.action = function (f) {
+		this.action = f;
+	}
+}

@@ -108,8 +108,25 @@ Try:
 
 ##### Validation:
 
-You have to implement "onSave" method. 
+You have to implement "saveAction" method. 
 
 Try:   
 
- - `form.onSave(function (val) {console.log(val)});`
+ - `form.saveAction(function (val){console.log(val)});`
+
+You can override label and cssClass:
+
+ - `form.saveAction(function (val){console.log(val)}, "label", "cssClass");
+
+
+##### Additionnal buttons:
+
+Try:   
+
+  `	button = new Button("Cancel");`
+  
+  `	button.cssClass("btn");`
+  
+  ` button.action(function (val){console.log("cancel")});`
+  
+  ` form.add(button);`

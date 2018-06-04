@@ -119,8 +119,13 @@
 			form.addCondition(
 				function (val) {return val.email != val.description}, 
 				'Email and description must be differents !');
-						
-			form.onSave(function (val) {console.log(val)});
+			
+			button = new Button("Cancel");
+			button.cssClass("btn");
+			button.action(function (val){console.log("cancel")});
+			form.add(button);
+			
+			form.saveAction(function (val){console.log(val)}, "Validate", "save");
 		
 			form.renderOn(html);			
 			
