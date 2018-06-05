@@ -85,6 +85,7 @@ FieldList = function () {
 	}
 	
 	this.init = function (anAtribute, aLabel) {
+		this.conditions = [];
 		this.options = [];
 		this.columnNumber = 1;
 		this.attribute = anAtribute;
