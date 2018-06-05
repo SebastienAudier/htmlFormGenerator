@@ -14,7 +14,6 @@ Field = function () {
 	this.label = '';
 	this.fieldContainer;
 	this.conditions;
-	this.isRequired;
 	this.cssClass;
 
 	this.init = function(anAtribute, aLabel) {
@@ -30,8 +29,8 @@ Field = function () {
 	}
 	
 	this.required = function(aString) {
-		this.isRequired = true;
 		this.addCondition(new NotEmptyCondition(aString));
+		this.addClass('required');
 	}
 	
 	this.addCondition = function (aCondition, aMessage) {
@@ -113,9 +112,6 @@ function InputRenderer(aField, aType) {
 	
 	that.renderOn = function(html) {
 		label = html.span(aField.label).addClass('label');
-		if(aField.isRequired) {
-			label.addClass('required');
-		}
 		input = html.input();
 		if (typeof(aType) != "undefined") {
 			input.setAttribute("type", aType);
@@ -171,9 +167,6 @@ function TextareaRenderer(aField) {
 	
 	that.renderOn = function(html) {
 		label = html.span(aField.label).addClass('label');
-		if(aField.isRequired) {
-			label.addClass('required');
-		}
 		textarea = html.textarea().change(
 			function(e) {
 				aField.form.proxy[aField.attribute] = jQuery(this).val();
@@ -203,9 +196,6 @@ function CheckboxRenderer(aField) {
 	
 	that.renderOn = function(html) {
 		label = html.span(aField.label).addClass('label');
-		if(aField.isRequired) {
-			label.addClass('required');
-		}
 		div = html.div().addClass("checkbox-container");
 		for(var i=0; i<aField.options.length; i++) {
 			checkbox = html.input().setAttribute('type', 'checkbox').setAttribute("data-submit", aField.options[i]);
@@ -261,9 +251,6 @@ function RadioRenderer(aField) {
 	
 	that.renderOn = function(html) {
 		label = html.span(aField.label).addClass('label');
-		if(aField.isRequired) {
-			label.addClass('required');
-		}
 		div = html.div().addClass("radio-container");
 		for(var i=0; i<aField.options.length; i++) {
 			radio = html.input().setAttribute('type', 'radio').setAttribute("data-submit", aField.options[i]);
@@ -309,9 +296,6 @@ function SelectRenderer(aField) {
 	
 	that.renderOn = function(html) {
 		label = html.span(aField.label).addClass('label');
-		if(aField.isRequired) {
-			label.addClass('required');
-		}
 		select = html.select();
 		for(var i=0; i<aField.options.length; i++) {
 			option = html.option(aField.options[i]).setAttribute("value", aField.options[i]);

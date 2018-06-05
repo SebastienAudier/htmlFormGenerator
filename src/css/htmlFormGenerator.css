@@ -45,7 +45,7 @@
 	width: 30%;
 }
 
-.required::after{
+.required .label::after{
 	content: " *";
 	color: red;
 }
