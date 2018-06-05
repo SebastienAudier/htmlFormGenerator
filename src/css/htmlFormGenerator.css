@@ -16,6 +16,12 @@
 	font-family: helvetica;
 }
 
+.form .clear {
+	clear: both;
+	width: 100%;
+	float: left;
+}
+
 .form .errors {
 	padding-top: 10px;
 	padding-bottom: 10px;

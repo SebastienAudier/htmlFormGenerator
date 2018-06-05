@@ -29,6 +29,10 @@ Form = function (anObject) {
 		}
 	}
 	
+	this.br = function () {
+		this.add(new BreakLine());
+	}
+  	
 	this.addCondition = function(f, message) {
 		condition = [];
 		condition.push(f);
@@ -98,11 +102,7 @@ function FormRenderer(aForm) {
 	
 	that.renderOn = function(html) {
 		for(var i=0; i < aForm.fields.length; i++) {
-			if(aForm.fields[i] instanceof Field) {
-				aForm.fields[i].renderOn(html);
-			} else {
-				aForm.fields[i].renderOn(html);
-			}
+			aForm.fields[i].renderOn(html);
 		}
 		errors = html.div().addClass('errors');
 		buttons = html.div().addClass('buttons');

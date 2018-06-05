@@ -29,3 +29,16 @@ function Comment(aString) {
 	return that;
 	
 }
+
+function BreakLine() {
+	
+	var that = htmlCanvas.widget();
+	
+	that.renderOn = function(html) {
+			html.div().addClass("clear");
+	}
+	
+	return that;
+	
+	
+}
