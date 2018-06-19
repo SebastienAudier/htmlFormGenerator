@@ -39,7 +39,8 @@ Form generator for htmlCanvas library
 	
 	field = new Input('attribute', 'My label :');
 	
-	![alt tag](https://github.com/SebastienAudier/htmlFormGenerator/blob/master/src/img/input.png)
+
+![alt tag](https://github.com/SebastienAudier/htmlFormGenerator/blob/master/src/img/input.png)
 
 	
 #### Field Types
