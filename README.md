@@ -64,6 +64,9 @@ API : Follow HTML tags. [See all fields](https://github.com/SebastienAudier/html
 Use an anonymous function to check the value during the form validation process. The last arguments are displayed under the field if the evaluation is false.
 	
     field.addCondition( function(val) { return val != 'hello' }, 'Hello word is reserved');
+	
+![alt tag](https://github.com/SebastienAudier/htmlFormGenerator/blob/master/src/img/example-condition.png)
+
 
 **Conditions API**
 
