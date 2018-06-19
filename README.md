@@ -65,7 +65,7 @@ Use an anonymous function to check the value during the form validation process.
 	
     field.addCondition( function(val) { return val != 'hello' }, 'Hello word is reserved');
 	
-![alt tag](https://github.com/SebastienAudier/htmlFormGenerator/blob/master/src/img/example-condition.png)
+![alt tag](https://github.com/SebastienAudier/htmlFormGenerator/blob/master/src/img/example-conditions.png)
 
 
 **Conditions API**
