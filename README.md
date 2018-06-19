@@ -75,6 +75,8 @@ Use the implemented conditions. [See all conditions](https://github.com/Sebastie
 ##### Example:
 
 	    field.addCondition(new NotEmptyCondition());
+		
+![alt tag](https://github.com/SebastienAudier/htmlFormGenerator/blob/master/src/img/example-empty-condition.png)
     
 ##### You can override error message:
 
