@@ -81,6 +81,9 @@ Use the implemented conditions. [See all conditions](https://github.com/Sebastie
 ##### You can override error message:
 
 	    field.addCondition(new EmailCondition('This format is not valid !'));
+		
+![alt tag](https://github.com/SebastienAudier/htmlFormGenerator/blob/master/src/img/example-override.png)
+		
 
 ##### Css behavior: 
 
