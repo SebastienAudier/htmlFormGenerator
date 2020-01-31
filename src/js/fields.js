@@ -7,7 +7,6 @@
  *
  */
 
-
 Field = function () {
 	this.form;
 	this.attribute;
@@ -15,6 +14,7 @@ Field = function () {
 	this.fieldContainer;
 	this.conditions;
 	this.cssClass;
+	this.validation;
 
 	this.init = function(anAtribute, aLabel) {
 		this.conditions = [];
@@ -25,34 +25,34 @@ Field = function () {
 	}
 	
 	this.label = function(aString) {
-		this.label = aString;
+		this.label = aString
 	}
 	
 	this.required = function(aString) {
 		this.addCondition(new NotEmptyCondition(aString));
-		this.addClass('required');
+		this.addClass('required')
 	}
 	
 	this.addCondition = function (aCondition, aMessage) {
 		condition = [];
 		condition.push(aCondition);
 		condition.push(aMessage);
-		this.conditions.push(condition);
+		this.conditions.push(condition)
 	}
 	
 	this.addClass = function(aString) {
-		this.cssClass += ' ' + aString;
+		this.cssClass += ' ' + aString
 	}
 
 	this.checkCondition = function (object) {
 		f = object[0];
 		if(f instanceof Condition) {
-			f = f.closure;
+			f = f.closure
 		}
 		f = f.toString();	
 		f = f.slice(f.indexOf("{") + 1, f.lastIndexOf("}"));
 		closure = new Function('val', f);	
-		return closure(eval('this.form.proxy.' + this.attribute));
+		return closure(eval('this.form.proxy.' + this.attribute))
 	}
 	
 	this.isValidated = function() {
@@ -60,14 +60,34 @@ Field = function () {
 			condition = this.conditions[i];
 			if(!this.checkCondition(condition)) {
 				if(condition[0] instanceof Condition) {
-					Error(condition[0].label).appendTo(this.fieldContainer);
+					Error(condition[0].label).appendTo(this.fieldContainer)
 				} else {
-					Error(condition[1]).appendTo(this.fieldContainer);
+					Error(condition[1]).appendTo(this.fieldContainer)
 				}
-				return false;
+				return false
 			}
 		}
-		return true;
+		return true
+	}
+	
+	this.clean = function () {
+		$(this.fieldContainer).find(".error").remove();
+	}
+	
+	this.liveValidation = function () {
+		this.validation = 'live'
+	}
+	
+	this.delayedValidation = function () {
+		this.validation = 'delayed'
+	}
+	
+	this.isLive = function () {
+		return this.validation == 'live'
+	}
+	
+	this.isDelayed = function () {
+		return this.validation == 'delayed'
 	}
 }
 
@@ -77,11 +97,11 @@ FieldList = function () {
 	this.cssClass = 'field';
 
 	this.setOptions = function (aCollection) {
-		this.options = aCollection;
+		this.options = aCollection
 	}
 	
 	this.setColumnNumber = function (aNumber) {
-		this.columnNumber = aNumber;
+		this.columnNumber = aNumber
 	}
 	
 	this.init = function (anAtribute, aLabel) {
@@ -89,7 +109,7 @@ FieldList = function () {
 		this.options = [];
 		this.columnNumber = 1;
 		this.attribute = anAtribute;
-		this.label = aLabel;
+		this.label = aLabel
 	}
 }
 
@@ -101,7 +121,7 @@ Input = function (anAtribute, aLabel, aType) {
 	
 	this.renderOn = function (html) {
 		this.fieldContainer = html.div().addClass(this.cssClass).asJQuery();
-		InputRenderer(this, aType).appendTo(this.fieldContainer);
+		InputRenderer(this, aType).appendTo(this.fieldContainer)
 	}
 }
 
@@ -115,7 +135,7 @@ function InputRenderer(aField, aType) {
 		label = html.span(aField.label).addClass('label');
 		input = html.input();
 		if (typeof(aType) != "undefined") {
-			input.setAttribute("type", aType);
+			input.setAttribute("type", aType)
 		}
 		input.change(
 			function() {
@@ -125,13 +145,17 @@ function InputRenderer(aField, aType) {
 		input.keyup(
 			function(e) {
 				if (e.keyCode == 13) {
-					aField.form.save();
+					aField.form.save()
 				} else {
 					aField.form.proxy[aField.attribute] = jQuery(this).val();
+					if(aField.isLive()) {
+						aField.clean();
+						aField.isValidated();
+					}
 				}
 			}
 		);
-		input.setAttribute('value', aField.form.proxy[aField.attribute]);
+		input.setAttribute('value', aField.form.proxy[aField.attribute])
 	}
 
 	return that;
@@ -143,7 +167,7 @@ Password = function (anAtribute, aLabel) {
 	
 	this.renderOn = function (html) {
 		this.fieldContainer = html.div().addClass(this.cssClass).asJQuery();
-		InputRenderer(this, 'password').appendTo(this.fieldContainer);
+		InputRenderer(this, 'password').appendTo(this.fieldContainer)
 	}
 }
 
@@ -156,7 +180,7 @@ Textarea = function (anAtribute, aLabel) {
 	
 	this.renderOn = function (html) {
 		this.fieldContainer = html.div().addClass(this.cssClass).asJQuery();
-		TextareaRenderer(this).appendTo(this.fieldContainer);
+		TextareaRenderer(this).appendTo(this.fieldContainer)
 	}
 }
 
@@ -170,10 +194,10 @@ function TextareaRenderer(aField) {
 		label = html.span(aField.label).addClass('label');
 		textarea = html.textarea().change(
 			function(e) {
-				aField.form.proxy[aField.attribute] = jQuery(this).val();
+				aField.form.proxy[aField.attribute] = jQuery(this).val()
 			}
 		);
-		textarea.asJQuery().val(aField.form.proxy[aField.attribute]);
+		textarea.asJQuery().val(aField.form.proxy[aField.attribute])
 	}
 
 	return that;
@@ -185,7 +209,7 @@ Checkbox = function (anAtribute, aLabel) {
 	
 	this.renderOn = function (html) {
 		this.fieldContainer = html.div().addClass(this.cssClass).asJQuery();
-		CheckboxRenderer(this).appendTo(this.fieldContainer);
+		CheckboxRenderer(this).appendTo(this.fieldContainer)
 	}
 }
 
@@ -203,14 +227,14 @@ function CheckboxRenderer(aField) {
 			checkbox.asJQuery().appendTo(div.asJQuery());
 			checkbox.click(function () {check($(this))});	
 			if(aField.form.proxy[aField.attribute].indexOf(aField.options[i]) != -1) {
-				checkbox.setAttribute("checked", "checked");
+				checkbox.setAttribute("checked", "checked")
 			}
 			html.span(aField.options[i]).addClass('option').asJQuery().appendTo(div.asJQuery());
 			if(aField.columnNumber == 1) {
-				html.br().asJQuery().appendTo(div.asJQuery());
+				html.br().asJQuery().appendTo(div.asJQuery())
 			} else {
 				if(i > 0 && ((i + 1) % aField.columnNumber == 0)) {
-					html.br().asJQuery().appendTo(div.asJQuery());
+					html.br().asJQuery().appendTo(div.asJQuery())
 				}
 			}
 		}
@@ -222,11 +246,11 @@ function CheckboxRenderer(aField) {
 		index = array.indexOf(value);
 		if(element.is(':checked')) {
 			if(index == -1) {
-				array.push(value);
+				array.push(value)
 			}
 		} else {
 			if(index != -1) {
-				array.splice(index, 1);
+				array.splice(index, 1)
 			}
 		}
 	}
@@ -240,7 +264,7 @@ Radio = function (anAtribute, aLabel) {
 	
 	this.renderOn = function (html) {
 		this.fieldContainer = html.div().addClass(this.cssClass).asJQuery();
-		RadioRenderer(this).appendTo(this.fieldContainer);
+		RadioRenderer(this).appendTo(this.fieldContainer)
 	}
 }
 
@@ -259,24 +283,24 @@ function RadioRenderer(aField) {
 			radio.asJQuery().appendTo(div.asJQuery());
 			radio.click(function () {check($(this))});	
 			if(aField.form.proxy[aField.attribute] == aField.options[i]) {
-				radio.setAttribute("checked", "checked");
+				radio.setAttribute("checked", "checked")
 			}
 			html.span(aField.options[i]).addClass('option').asJQuery().appendTo(div.asJQuery());
 			if(aField.columnNumber == 1) {
-				html.br().asJQuery().appendTo(div.asJQuery());
+				html.br().asJQuery().appendTo(div.asJQuery())
 			} else {
 				if(i > 0 && ((i + 1) % aField.columnNumber == 0)) {
-					html.br().asJQuery().appendTo(div.asJQuery());
+					html.br().asJQuery().appendTo(div.asJQuery())
 				}
 			}
 		}
 	}
 
 	function check(element) {
-		aField.form.proxy[aField.attribute] = element.attr("data-submit");
+		aField.form.proxy[aField.attribute] = element.attr("data-submit")
 	}
 	
-	return that;
+	return that
 }
 
 Select = function (anAtribute, aLabel) {
@@ -285,7 +309,7 @@ Select = function (anAtribute, aLabel) {
 	
 	this.renderOn = function (html) {
 		this.fieldContainer = html.div().addClass(this.cssClass).asJQuery();
-		SelectRenderer(this).appendTo(this.fieldContainer);
+		SelectRenderer(this).appendTo(this.fieldContainer)
 	}
 }
 
@@ -301,15 +325,15 @@ function SelectRenderer(aField) {
 		for(var i=0; i<aField.options.length; i++) {
 			option = html.option(aField.options[i]).setAttribute("value", aField.options[i]);
 			if(aField.form.proxy[aField.attribute] == aField.options[i]) {
-				option.setAttribute("selected", true);
+				option.setAttribute("selected", true)
 			}
 			option.asJQuery().appendTo(select.asJQuery());
 		}
-		select.asJQuery().change(function () {selectOption($(this))});
+		select.asJQuery().change(function () {selectOption($(this))})
 	}
 	
 	function selectOption(element) {
-		aField.form.proxy[aField.attribute] = element.val();
+		aField.form.proxy[aField.attribute] = element.val()
 	}
 	
 	return that;
@@ -321,10 +345,10 @@ Button = function (aLabel) {
 	this.action;
 
 	this.cssClass = function (val) {
-		this.cssClass = val;
+		this.cssClass = val
 	}
 	
 	this.action = function (f) {
-		this.action = f;
+		this.action = f
 	}
 }
