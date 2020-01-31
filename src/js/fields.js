@@ -56,6 +56,7 @@ Field = function () {
 	}
 	
 	this.isValidated = function() {
+		this.clean();
 		for(var i=0; i<this.conditions.length; i++) {
 			condition = this.conditions[i];
 			if(!this.checkCondition(condition)) {
@@ -83,11 +84,11 @@ Field = function () {
 	}
 	
 	this.isLive = function () {
-		return this.validation == 'live'
+		return this.validation == 'live' || this.form.isLive()
 	}
 	
 	this.isDelayed = function () {
-		return this.validation == 'delayed'
+		return this.validation == 'delayed' || this.form.isDelayed()
 	}
 }
 
@@ -137,19 +138,14 @@ function InputRenderer(aField, aType) {
 		if (typeof(aType) != "undefined") {
 			input.setAttribute("type", aType)
 		}
-		input.change(
-			function() {
-				aField.form.proxy[aField.attribute] = jQuery(this).val();
-			}
-		);
 		input.keyup(
 			function(e) {
+				aField.form.proxy[aField.attribute] = jQuery(this).val();
 				if (e.keyCode == 13) {
 					aField.form.save()
 				} else {
 					aField.form.proxy[aField.attribute] = jQuery(this).val();
 					if(aField.isLive()) {
-						aField.clean();
 						aField.isValidated();
 					}
 				}
@@ -192,9 +188,12 @@ function TextareaRenderer(aField) {
 	
 	that.renderOn = function(html) {
 		label = html.span(aField.label).addClass('label');
-		textarea = html.textarea().change(
+		textarea = html.textarea().keyup(
 			function(e) {
 				aField.form.proxy[aField.attribute] = jQuery(this).val()
+				if(aField.isLive()) {
+					aField.isValidated();
+				}
 			}
 		);
 		textarea.asJQuery().val(aField.form.proxy[aField.attribute])
@@ -225,7 +224,7 @@ function CheckboxRenderer(aField) {
 		for(var i=0; i<aField.options.length; i++) {
 			checkbox = html.input().setAttribute('type', 'checkbox').setAttribute("data-submit", aField.options[i]);
 			checkbox.asJQuery().appendTo(div.asJQuery());
-			checkbox.click(function () {check($(this))});	
+			checkbox.click(function () {check($(this), aField)});	
 			if(aField.form.proxy[aField.attribute].indexOf(aField.options[i]) != -1) {
 				checkbox.setAttribute("checked", "checked")
 			}
@@ -240,7 +239,7 @@ function CheckboxRenderer(aField) {
 		}
 	}
 
-	function check(element) {
+	function check(element, aField) {
 		array = aField.form.proxy[aField.attribute];
 		value = element.attr("data-submit");
 		index = array.indexOf(value);
@@ -252,6 +251,9 @@ function CheckboxRenderer(aField) {
 			if(index != -1) {
 				array.splice(index, 1)
 			}
+		}
+		if(aField.isLive()) {
+			aField.isValidated();
 		}
 	}
 	
@@ -281,7 +283,7 @@ function RadioRenderer(aField) {
 			radio = html.input().setAttribute('type', 'radio').setAttribute("data-submit", aField.options[i]);
 			radio.setAttribute("name", aField.attribute);
 			radio.asJQuery().appendTo(div.asJQuery());
-			radio.click(function () {check($(this))});	
+			radio.click(function () {check($(this), aField)});	
 			if(aField.form.proxy[aField.attribute] == aField.options[i]) {
 				radio.setAttribute("checked", "checked")
 			}
@@ -296,8 +298,11 @@ function RadioRenderer(aField) {
 		}
 	}
 
-	function check(element) {
-		aField.form.proxy[aField.attribute] = element.attr("data-submit")
+	function check(element, aField) {
+		aField.form.proxy[aField.attribute] = element.attr("data-submit");
+		if(aField.isLive()) {
+			aField.isValidated();
+		}
 	}
 	
 	return that
@@ -329,11 +334,14 @@ function SelectRenderer(aField) {
 			}
 			option.asJQuery().appendTo(select.asJQuery());
 		}
-		select.asJQuery().change(function () {selectOption($(this))})
+		select.asJQuery().change(function () {selectOption($(this), aField)})
 	}
 	
-	function selectOption(element) {
-		aField.form.proxy[aField.attribute] = element.val()
+	function selectOption(element, aField) {
+		aField.form.proxy[aField.attribute] = element.val();
+		if(aField.isLive()) {
+			aField.isValidated();
+		}
 	}
 	
 	return that;

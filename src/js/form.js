@@ -17,6 +17,7 @@ Form = function (anObject) {
 	this.saveLabel = 'Save';
 	this.saveCssClass = '';
 	this.buttons = [];
+	this.validation;
 	
 	this.add = function(anObject) {
 		if(anObject instanceof Button) {
@@ -77,7 +78,7 @@ Form = function (anObject) {
 	}
 	
 	this.save = function() {
-		$(".error").remove();
+		$(".errors").html('');
 		var allFieldsAreValidated = true;
 		for(var i=0; i< this.fields.length; i++) {
 			object = this.fields[i];
@@ -93,6 +94,22 @@ Form = function (anObject) {
 				return closure(eval(this.proxy));
 			}
 		} 
+	}
+	
+	this.liveValidation = function () {
+		this.validation = 'live'
+	}
+	
+	this.delayedValidation = function () {
+		this.validation = 'delayed'
+	}
+	
+	this.isLive = function () {
+		return this.validation = 'live'
+	}
+	
+	this.isDelayed = function () {
+		return this.validation = 'delayed'
 	}
 }
 
