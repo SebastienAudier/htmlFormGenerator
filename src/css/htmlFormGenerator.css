@@ -60,7 +60,13 @@
 .field textarea,
 .field .checkbox-container,
 .field .radio-container {
-	width: 69%;
+	width: 60%;
+}
+
+.field input,
+.field textarea {
+	border: 1px solid #bbb;
+	padding: 1px;
 }
 
 .field .checkbox-container input,
@@ -70,7 +76,7 @@
 }
 
 .error {
-	width: 69%;
+	width: 60%;
 	color: red;
     margin: 10px;
     margin-left: 30%;
@@ -85,4 +91,19 @@
 	color: #3b3b3b;
 	float: left;
 	width: 99%;
+}
+
+.field.validated input,
+.field.validated textarea {
+	border: 1px solid green;
+	background: #f3fff8;
+}
+
+.field .validated {
+	width: 8%;
+	height: 16px;
+	margin-top: 4px;
+	background: url("./../../img/valid_16.png") no-repeat;
+	background-size: 16px;
+	margin-left: 1%;
 }

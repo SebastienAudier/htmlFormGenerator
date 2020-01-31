@@ -65,14 +65,19 @@ Field = function () {
 				} else {
 					Error(condition[1]).appendTo(this.fieldContainer)
 				}
+				StateComponent('unvalidated', this.fieldContainer).appendTo(this.fieldContainer);
 				return false
 			}
 		}
+		StateComponent('validated', this.fieldContainer).appendTo(this.fieldContainer);
 		return true
 	}
 	
 	this.clean = function () {
 		$(this.fieldContainer).find(".error").remove();
+		this.fieldContainer.removeClass("unvalidated");
+		this.fieldContainer.removeClass("validated");
+		$(this.fieldContainer).find(".icon").remove();
 	}
 	
 	this.liveValidation = function () {
@@ -90,6 +95,19 @@ Field = function () {
 	this.isDelayed = function () {
 		return this.validation == 'delayed' || this.form.isDelayed()
 	}
+}
+
+
+function StateComponent(aString, aFieldContainer) {
+	
+	var that = htmlCanvas.widget();
+
+	that.renderOn = function(html) {
+		aFieldContainer.addClass(aString);
+		html.div().addClass('icon ' + aString);
+	}
+	
+	return that
 }
 
 FieldList = function () {
@@ -122,7 +140,7 @@ Input = function (anAtribute, aLabel, aType) {
 	
 	this.renderOn = function (html) {
 		this.fieldContainer = html.div().addClass(this.cssClass).asJQuery();
-		InputRenderer(this, aType).appendTo(this.fieldContainer)
+		InputRenderer(this, aType).appendTo(this.fieldContainer);
 	}
 }
 
