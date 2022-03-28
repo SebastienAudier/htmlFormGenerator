@@ -1,18 +1,20 @@
-/*
- * Copyright 2018 Sebastien AUDIER <sebastien.audier@gmail.com>
- * This file is released under MIT.
- * See the LICENSE file for more infos.
- *
- * A simple Form generator for htmlCanvas library
- *
- */
-
-Error = function (aString) {
+Error = function (aCondition) {
 	
 	var that = htmlCanvas.widget();
 
 	that.renderOn = function(html) {
-		html.span(aString).addClass('error');
+		if(aCondition instanceof EqualityCondition) {
+			html.span(translate(aCondition.label)).addClass('error');
+			ul = html.ul().asJQuery();
+			for(i in aCondition.fields) {
+				field = aCondition.fields[i];
+				html.li(field.label).asJQuery().appendTo(ul);
+				field.clean();
+				StateComponent('unvalidated', field.fieldContainer).appendTo(field.fieldContainer);
+			}	
+		} else {
+			html.span(translate(aCondition.label)).addClass('error')
+		}
 	}
 
 	return that;
@@ -23,7 +25,7 @@ function Comment(aString) {
 	var that = htmlCanvas.widget();
 	
 	that.renderOn = function(html) {
-			html.span(aString).addClass("comment");
+			html.span(translate(aString)).addClass("comment");
 	}
 	
 	return that;

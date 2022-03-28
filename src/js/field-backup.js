@@ -1,16 +1,18 @@
 Field = function () {
 	this.form;
-	this.attribute; 
+	this.attribute;
 	this.label = '';
 	this.fieldContainer;
-	this.conditions = [];
-	this.cssClass = 'field';
-	this.isRequired = false;
+	this.conditions;
+	this.cssClass;
 	this.validation;
 
 	this.init = function(anAtribute, aLabel) {
+		this.conditions = [];
+		this.cssClass = 'field';
 		this.attribute = anAtribute;
 		this.label = translate(aLabel);
+		this.isRequired = false;
 	}
 	
 	this.label = function(aString) {
@@ -99,40 +101,45 @@ function StateComponent(aString, aFieldContainer) {
 	return that
 }
 
-FieldList = function (anAttribute, aLabel) {
+FieldList = function () {
 
-	var that = new Field();
-	that.init(anAttribute, aLabel);
-	that.options = [];
-	that.columnNumber = 1;
+	this.conditions = [];
+	this.cssClass = 'field';
 
-	that.setOptions = function (aCollection) {
-		that.options = aCollection
+	this.setOptions = function (aCollection) {
+		this.options = aCollection
 	}
 	
-	that.setWidget = function (aWidget) {
-		that.widget = aWidget
+	this.setWidget = function (aWidget) {
+		this.widget = aWidget
 	}
 
-	that.setColumnNumber = function (aNumber) {
-		that.columnNumber = aNumber
+	this.setColumnNumber = function (aNumber) {
+		this.columnNumber = aNumber
 	}
-
-	return that
+	
+	this.init = function (anAtribute, aLabel) {
+		this.conditions = [];
+		this.options = [];
+		this.columnNumber = 1;
+		this.attribute = anAtribute;
+		this.label = translate(aLabel)
+	}
 }
+
+FieldList.prototype = new Field();	
 
 Input = function (anAtribute, aLabel, aType) {
 
-	var that = new Field();
-	that.init(anAtribute, aLabel);
+	this.init(anAtribute, aLabel);
 	
-	that.renderOn = function (html) {
-		that.fieldContainer = html.div().addClass(that.cssClass).asJQuery();
-		InputRenderer(that, aType).appendTo(that.fieldContainer);
+	this.renderOn = function (html) {
+		this.fieldContainer = html.div().addClass(this.cssClass).asJQuery();
+		InputRenderer(this, aType).appendTo(this.fieldContainer);
 	}
-
-	return that
 }
+
+Input.prototype = new Field();	
 
 function InputRenderer(aField, aType) {
 	
@@ -165,29 +172,28 @@ function InputRenderer(aField, aType) {
 
 Password = function (anAtribute, aLabel) {
 
-	var that = new Field();
-	that.init(anAtribute, aLabel);
+	this.init(anAtribute, aLabel);
 	
-	that.renderOn = function (html) {
-		that.fieldContainer = html.div().addClass(that.cssClass).asJQuery();
-		InputRenderer(that, 'password').appendTo(that.fieldContainer)
+	this.renderOn = function (html) {
+		this.fieldContainer = html.div().addClass(this.cssClass).asJQuery();
+		InputRenderer(this, 'password').appendTo(this.fieldContainer)
 	}
-	
-	return that
 }
+
+Password.prototype = new Field();	
+
 
 Textarea = function (anAtribute, aLabel) {
 
-	var that = new Field();
-	that.init(anAtribute, aLabel);
+	this.init(anAtribute, aLabel);
 	
-	that.renderOn = function (html) {
-		that.fieldContainer = html.div().addClass(that.cssClass).asJQuery();
-		TextareaRenderer(that).appendTo(that.fieldContainer)
+	this.renderOn = function (html) {
+		this.fieldContainer = html.div().addClass(this.cssClass).asJQuery();
+		TextareaRenderer(this).appendTo(this.fieldContainer)
 	}
-	
-	return that
 }
+
+Textarea.prototype = new Field();	
 
 function TextareaRenderer(aField) {
 	
@@ -211,16 +217,15 @@ function TextareaRenderer(aField) {
 
 Checkbox = function (anAtribute, aLabel) {
 
-	var that = new FieldList(); 
-	that.init(anAtribute, aLabel);
+	this.init(anAtribute, aLabel);
 	
-	that.renderOn = function (html) {
-		that.fieldContainer = html.div().addClass(that.cssClass).asJQuery();
-		CheckboxRenderer(that).appendTo(that.fieldContainer)
+	this.renderOn = function (html) {
+		this.fieldContainer = html.div().addClass(this.cssClass).asJQuery();
+		CheckboxRenderer(this).appendTo(this.fieldContainer)
 	}
-
-	return that
 }
+
+Checkbox.prototype = new FieldList();	
 
 function CheckboxRenderer(aField) {
 	
@@ -270,16 +275,15 @@ function CheckboxRenderer(aField) {
 
 Radio = function (anAtribute, aLabel) {
 
-	var that = new FieldList()
-	that.init(anAtribute, aLabel);
+	this.init(anAtribute, aLabel);
 	
-	that.renderOn = function (html) {
-		that.fieldContainer = html.div().addClass(that.cssClass).asJQuery();
-		RadioRenderer(that).appendTo(that.fieldContainer)
+	this.renderOn = function (html) {
+		this.fieldContainer = html.div().addClass(this.cssClass).asJQuery();
+		RadioRenderer(this).appendTo(this.fieldContainer)
 	}
-
-	return that
 }
+
+Radio.prototype = new FieldList();	
 
 function RadioRenderer(aField) {
 	
@@ -332,16 +336,15 @@ function RadioRenderer(aField) {
 
 Select = function (anAtribute, aLabel) {
 
-	var that = new FieldList();
-	that.init(anAtribute, aLabel);
+	this.init(anAtribute, aLabel);
 	
-	that.renderOn = function (html) {
-		that.fieldContainer = html.div().addClass(that.cssClass).asJQuery();
-		SelectRenderer(that).appendTo(that.fieldContainer)
+	this.renderOn = function (html) {
+		this.fieldContainer = html.div().addClass(this.cssClass).asJQuery();
+		SelectRenderer(this).appendTo(this.fieldContainer)
 	}
-
-	return that
 }
+
+Select.prototype = new FieldList();	
 
 function SelectRenderer(aField) {
 	

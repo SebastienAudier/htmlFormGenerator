@@ -1,12 +1,3 @@
-/*
- * Copyright 2018 Sebastien AUDIER <sebastien.audier@gmail.com>
- * This file is released under MIT.
- * See the LICENSE file for more infos.
- *
- * A simple Form generator for htmlCanvas library
- *
- */
-
 Form = function (anObject) {
 	
 	this.object = anObject;
@@ -18,62 +9,72 @@ Form = function (anObject) {
 	this.saveCssClass = '';
 	this.buttons = [];
 	this.validation;
+	this.cssClass = '';
 	
 	this.add = function(anObject) {
 		if(anObject instanceof Button) {
-			this.buttons.push(anObject);
+			this.buttons.push(anObject)
 		} else {
 			if(anObject instanceof Field) {
-				anObject.form = this;
+				anObject.form = this
 			}
-			this.fields.push(anObject);
+			this.fields.push(anObject)
 		}
 	}
 	
 	this.br = function () {
-		this.add(new BreakLine());
+		this.add(new BreakLine())
 	}
   	
-	this.addCondition = function(f, message) {
+	this.addCondition = function(aCondition, message) {
 		condition = [];
-		condition.push(f);
+		condition.push(aCondition);
 		condition.push(message);
-		this.conditions.push(condition);
+		this.conditions.push(condition)
 	}
-	
+
 	this.checkCondition = function(object) {
-		f = object[0].toString();	
+		f = object[0];
+		if(f instanceof Condition) {
+			f = f.closure
+		}
+		f = f.toString();	
 		f = f.slice(f.indexOf("{") + 1, f.lastIndexOf("}"));
 		closure = new Function('val', f);	
-		return closure(eval('this.proxy'));
+	
+		return closure(eval('this.proxy'))
 	}
 	
 	this.isValidated = function() {
 		for(var i=0; i<this.conditions.length; i++) {
 			condition = this.conditions[i];
 			if(!this.checkCondition(condition)) {
-				Error(condition[1]).appendTo($('.errors'));
-				return false;
+				if(condition[0] instanceof Condition) {
+					Error(condition[0]).appendTo($('.errors'))
+				} else {
+					Error(condition[1]).appendTo($('.errors'))
+				}
+				return false
 			}
 		}
-		return true;
+		return true
 	}
 	
 	this.onCancel = function (f) {
-		this.cancelAction = f;
+		this.cancelAction = f
 	}
 	
 	this.renderOn = function(html) {
-		FormRenderer(this).appendTo(html.div().addClass('form').asJQuery())
+		FormRenderer(this).appendTo(html.div().addClass('form ' + this.cssClass).asJQuery())
 	}
 	
 	this.saveAction = function(aFunction, aLabel, aCssClass) {
 		this.saveAction = aFunction;
 		if (typeof(aLabel) != "undefined") {
-			this.saveLabel = aLabel;
+			this.saveLabel = aLabel
 		}
 		if (typeof(aCssClass) != "undefined") {
-			this.saveCssClass = aCssClass;
+			this.saveCssClass = aCssClass
 		}
 	}
 	
@@ -83,15 +84,15 @@ Form = function (anObject) {
 		for(var i=0; i< this.fields.length; i++) {
 			object = this.fields[i];
 			if(object instanceof Field && !object.isValidated()) {
-				allFieldsAreValidated = false;
+				allFieldsAreValidated = false
 			}
 		}
 		if(allFieldsAreValidated) {
 			if(this.isValidated()) {
-				f = this.saveAction.toString().split('{');
+				var f = this.saveAction.toString().split('{');
 				f = f[1].split('}')[0];
-				closure = new Function('val', 'return ' + f + ';');
-				return closure(eval(this.proxy));
+				closure = new Function('val', 'return ' + f + '');
+				return closure(eval(this.proxy))
 			}
 		} 
 	}
@@ -105,11 +106,11 @@ Form = function (anObject) {
 	}
 	
 	this.isLive = function () {
-		return this.validation = 'live'
+		return this.validation == 'live'
 	}
 	
 	this.isDelayed = function () {
-		return this.validation = 'delayed'
+		return this.validation == 'delayed'
 	}
 }
 
@@ -123,10 +124,14 @@ function FormRenderer(aForm) {
 		}
 		errors = html.div().addClass('errors');
 		buttons = html.div().addClass('buttons');
-		html.button(aForm.saveLabel).click(function () {save()}).addClass(aForm.saveCssClass).asJQuery().appendTo(buttons.asJQuery());
+		saveButton = html.button(translate(aForm.saveLabel)).click(function () {save()}).addClass(aForm.saveCssClass).asJQuery();
+		if(aForm.saveCssClass.includes('ok')) {
+			html.span().addClass("glyphicon glyphicon-ok").asJQuery().prependTo(saveButton)
+		}
+		saveButton.appendTo(buttons.asJQuery());
 		for(var i=0; i < aForm.buttons.length; i++) {
 			btn = aForm.buttons[i];
-			html.button(btn.label).addClass(btn.cssClass).click(btn.action).asJQuery().appendTo(buttons.asJQuery());
+			html.button(translate(btn.label)).addClass(btn.cssClass).click(btn.action).asJQuery().appendTo(buttons.asJQuery());
 		} 
 	}
 	
