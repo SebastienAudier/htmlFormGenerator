@@ -1,3 +1,13 @@
+/*
+ * Copyright 2018 Sebastien AUDIER <sebastien.audier@gmail.com>
+ * This file is released under MIT.
+ * See the LICENSE file for more infos.
+ *
+ * A simple Form generator for htmlCanvas library
+ *
+ */
+
+
 Field = function () {
 	this.form;
 	this.attribute; 
